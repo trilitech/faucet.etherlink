@@ -5,8 +5,8 @@ import { useCallback, useEffect, useState } from "react";
 export interface IWeb3State {
   address: string | null;
   currentChain: number | null;
-  signer: typeof JsonRpcSigner | null;
-  provider: typeof BrowserProvider | null;
+  signer: JsonRpcSigner | null;
+  provider: BrowserProvider | null;
   isAuthenticated: boolean;
 }
 
