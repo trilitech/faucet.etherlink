@@ -41,7 +41,7 @@ export default function Home() {
     <div className="dark:bg-etherlink-bg min-h-screen mb-auto flex flex-col justify-between">
       <div className="container max-w-7xl mx-auto">
         <Navbar
-          walletAddress={address}
+          walletAddress={address ? address : ""}
           isConnected={isAuthenticated}
           connectWallet={connectWallet}
           disconnectWallet={disconnect}

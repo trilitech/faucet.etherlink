@@ -5,11 +5,11 @@ import { calculateReadableBal } from "../helpers";
 const useFetchBalances = () => {
   const contract = useAggregatorContract();
   const [loadingBalances, setLoading] = useState(false);
-  const [userBalances, setUserBalances] = useState(null);
+  const [userBalances, setUserBalances] = useState<number[]>([]);
 
   const fetchBalances = async (userAddress: string) => {
     if (!contract) return;
-    let finalResult = [];
+    let finalResult: number[] = [];
 
     setLoading(true);
 
