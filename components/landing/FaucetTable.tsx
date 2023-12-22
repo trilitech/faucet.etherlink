@@ -88,7 +88,7 @@ const FaucetTable = ({ loadingDrip, drip, loadingBalances, userBalances, setSele
             drip(rowData.address);
             setSelectedToken(rowData.token);
           }}
-          className="bg-darkGreen hover:bg-gray-700 hover:font-medium shadow-md ease-in-out duration-200 rounded-md px-6 py-2 flex items-center w-40 flex items-center justify-center"
+          className="bg-darkGreen hover:bg-gray-700 hover:font-medium shadow-md ease-in-out duration-200 rounded-md px-6 py-2 flex items-center w-40 justify-center"
         >
           Drip
         </button>

@@ -20,7 +20,7 @@ export default function Home() {
   const { fetchBalances, loadingBalances, userBalances } = useFetchBalances();
   const [reloadBalance, setReloadBalance] = useState(false);
   const [selectedToken, setSelectedToken] = useState("");
-  const { drip, loading } = useDrip(address, setReloadBalance);
+  const { drip, loading } = useDrip(address || '', setReloadBalance);
 
   useEffect(() => {
     let mounted = true;
