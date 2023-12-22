@@ -6,7 +6,7 @@ const shortenAddress = (addressHash: string) => {
     return finalStr
 }
 
-const calculateReadableBal = (bigIntNum) => {
+const calculateReadableBal = (bigIntNum: string | number) => {
     return Number(bigIntNum) / 10 ** 18
 }
 

@@ -18,7 +18,7 @@ const useFetchBalances = () => {
       const result = Object.fromEntries(Object.entries(transaction));
       const resultArr = Object.keys(result).map((key) => result[key]);
 
-      resultArr.map((result) => finalResult.push(calculateReadableBal(result)));
+      resultArr.map((result) => finalResult.push(calculateReadableBal(Number(result))));
       setUserBalances(finalResult);
       // console.log({ finalResult });
     } catch {
