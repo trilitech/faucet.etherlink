@@ -19,8 +19,15 @@ interface FaucetTableProps {
   setSelectedToken: (token: string) => void;
 }
 
+interface TokenData {
+  token: string;
+  balance: number;
+  img: any;
+  address: string;
+}
+
 const FaucetTable = ({ loadingDrip, drip, loadingBalances, userBalances, setSelectedToken }: FaucetTableProps) => {
-  const [tokens, setTokens] = useState([]);
+  const [tokens, setTokens] = useState<TokenData[]>([]);
 
   useEffect(() => {
     let mounted = true;
@@ -70,10 +77,10 @@ const FaucetTable = ({ loadingDrip, drip, loadingBalances, userBalances, setSele
       }
     }
 
-    return () => (mounted = false);
+    return () => {mounted = false};
   }, [userBalances]);
 
-  const dripColumnTemplate = (rowData) => {
+  const dripColumnTemplate = (rowData: TokenData) => {
     if (rowData.token !== "XTZ") {
       return (
         <button
@@ -100,7 +107,7 @@ const FaucetTable = ({ loadingDrip, drip, loadingBalances, userBalances, setSele
     }
   };
 
-  const tokenColumnTemplate = (rowData) => {
+  const tokenColumnTemplate = (rowData: TokenData) => {
     return (
       <button className="rounded-md px-6 py-2 flex items-center">
         <Image src={rowData.img} width={10} alt={rowData.token} className="bg rounded-full h-8 w-8 px-1 py-1 mr-2" />
@@ -109,7 +116,7 @@ const FaucetTable = ({ loadingDrip, drip, loadingBalances, userBalances, setSele
     );
   };
 
-  const balanceColumnTemplate = (rowData) => {
+  const balanceColumnTemplate = (rowData: TokenData) => {
     return (
       <span className="font-bold">{userBalances.length < 1 ? "loading" : rowData.balance + " " + rowData.token}</span>
     );
