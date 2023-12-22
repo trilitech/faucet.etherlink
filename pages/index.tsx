@@ -29,12 +29,12 @@ export default function Home() {
         fetchBalances(address);
       }
 
-      if (reloadBalance) {
+      if (reloadBalance && address) {
         fetchBalances(address);
         setReloadBalance(false);
       }
     }
-    return () => (mounted = false);
+    return () => {mounted = false};
   }, [address, reloadBalance, fetchBalances])
 
   return (
