@@ -11,7 +11,15 @@ import bitcoin from "../../public/images/token-icons/bitcoin.svg";
 import eusd from "../../public/images/token-icons/eusd.svg";
 import Image from "next/image";
 
-const FaucetTable = ({ loadingDrip, drip, loadingBalances, userBalances, setSelectedToken }) => {
+interface FaucetTableProps {
+  loadingDrip: boolean;
+  drip: (address: string) => void;
+  loadingBalances: boolean;
+  userBalances: number[];
+  setSelectedToken: (token: string) => void;
+}
+
+const FaucetTable = ({ loadingDrip, drip, loadingBalances, userBalances, setSelectedToken }: FaucetTableProps) => {
   const [tokens, setTokens] = useState([]);
 
   useEffect(() => {
