@@ -1,4 +1,4 @@
-import { eUSD_ADDRESS, USDT_ADDRESS, USDC_ADDRESS, BTC_ADDRESS, ETH_ADDRESS } from "../../constants/addresses";
+import { eUSD_ADDRESS, USDT_ADDRESS, USDC_ADDRESS, BTC_ADDRESS, ETH_ADDRESS, XTZ_ADDRESS } from "../../constants/addresses";
 import { useState, useEffect } from "react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
@@ -36,39 +36,39 @@ const FaucetTable = ({ loadingDrip, drip, loadingBalances, userBalances, setSele
         const data = [
           {
             token: "XTZ",
-            balance: 0,
+            balance: userBalances[0],
             img: xtz,
-            address: "",
+            address: XTZ_ADDRESS,
           },
 
           {
             token: "eUSD",
-            balance: userBalances[0],
+            balance: userBalances[1],
             img: eusd,
             address: eUSD_ADDRESS,
           },
           {
             token: "USDT",
-            balance: userBalances[1],
+            balance: userBalances[2],
             img: usdt,
             address: USDT_ADDRESS,
           },
           {
             token: "USDC",
-            balance: userBalances[2],
+            balance: userBalances[3],
             img: usdc,
             address: USDC_ADDRESS,
           },
 
           {
             token: "BTC",
-            balance: userBalances[3],
+            balance: userBalances[4],
             img: bitcoin,
             address: BTC_ADDRESS,
           },
           {
             token: "ETH",
-            balance: userBalances[4],
+            balance: userBalances[5],
             img: eth,
             address: ETH_ADDRESS,
           },
