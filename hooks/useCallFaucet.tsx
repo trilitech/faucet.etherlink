@@ -38,6 +38,7 @@ const useCallFaucet = () => {
   const { state: { address } } = context;
 
   const callFaucet = async () => {
+    console.log("Wallet address is: " + address);
     const body = JSON.stringify({ walletAddress: address });
     // setIsLoading(true);
     const response = await fetch('/api/faucet', {

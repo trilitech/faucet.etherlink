@@ -101,8 +101,8 @@ const FaucetTable = ({ loadingDrip, drip, loadingBalances, userBalances, setSele
         <button
           onClick={() => {
             console.log("Get XTZ from EOA via serverless function");
+            callFaucet;
             setSelectedToken(rowData.token);
-            callFaucet
           }}
           className="bg-darkGreen hover:bg-gray-700 hover:font-medium shadow-md ease-in-out duration-200 rounded-md px-6 py-2 flex items-center"
         >
