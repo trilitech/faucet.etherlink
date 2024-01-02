@@ -1,5 +1,5 @@
 import { eUSD_ADDRESS, USDT_ADDRESS, USDC_ADDRESS, BTC_ADDRESS, ETH_ADDRESS } from "../../constants/addresses";
-import useCallFaucet from "../../hooks/useCallFaucet";
+// import useCallFaucet from "../../hooks/useCallFaucet";
 import { useState, useEffect } from "react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
@@ -11,6 +11,7 @@ import eth from "../../public/images/token-icons/eth.svg";
 import bitcoin from "../../public/images/token-icons/bitcoin.svg";
 import eusd from "../../public/images/token-icons/eusd.svg";
 import Image from "next/image";
+import { useWeb3Context } from "../../context/Web3Context";
 import { calculateOverrideValues } from "next/dist/server/font-utils";
 
 interface FaucetTableProps {
@@ -30,7 +31,12 @@ interface TokenData {
 
 const FaucetTable = ({ loadingDrip, drip, loadingBalances, userBalances, setSelectedToken }: FaucetTableProps) => {
   const [tokens, setTokens] = useState<TokenData[]>([]);
-  const callFaucet = useCallFaucet();
+  const context = useWeb3Context();
+  if (!context) {
+    console.error('Web3Context is null');
+    return;
+  }
+  const { state: { address } } = context;
 
   useEffect(() => {
     let mounted = true;
@@ -83,6 +89,28 @@ const FaucetTable = ({ loadingDrip, drip, loadingBalances, userBalances, setSele
     return () => {mounted = false};
   }, [userBalances]);
 
+  const callFaucet = async () => {
+    console.log("Wallet address is: " + address);
+    const body = JSON.stringify({ walletAddress: address });
+    // setIsLoading(true);
+    const response = await fetch('/api/faucet', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: body,
+    });
+  
+    if (response.ok) {
+      const data = await response.json();
+      console.log("txHash; " + data.body.receipt.transactionHash);
+      // setTxHash(data.body.receipt.transactionHash);
+      // setTokensClaimed(true);
+    } else {
+      console.error('Error:', response.status);
+    }
+  };
+
   const dripColumnTemplate = (rowData: TokenData) => {
     if (rowData.token !== "XTZ") {
       return (
@@ -101,7 +129,7 @@ const FaucetTable = ({ loadingDrip, drip, loadingBalances, userBalances, setSele
         <button
           onClick={() => {
             console.log("Get XTZ from EOA via serverless function");
-            callFaucet;
+            callFaucet();
             setSelectedToken(rowData.token);
           }}
           className="bg-darkGreen hover:bg-gray-700 hover:font-medium shadow-md ease-in-out duration-200 rounded-md px-6 py-2 flex items-center"
