@@ -7,6 +7,7 @@ const useFetchBalances = () => {
   const [loadingBalances, setLoading] = useState(false);
   const [userBalances, setUserBalances] = useState<number[]>([]);
 
+
   const fetchBalances = async (userAddress: string) => {
     if (!contract) return;
     let finalResult: number[] = [];
