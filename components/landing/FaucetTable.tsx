@@ -93,7 +93,7 @@ const FaucetTable = ({ loadingDrip, drip, loadingBalances, userBalances, setSele
     console.log("Wallet address is: " + address);
     const body = JSON.stringify({ walletAddress: address });
     // setIsLoading(true);
-    const response = await fetch('/api/faucet', {
+    const response = await fetch('/api/faucet/route', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
