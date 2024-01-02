@@ -1,4 +1,5 @@
 import { eUSD_ADDRESS, USDT_ADDRESS, USDC_ADDRESS, BTC_ADDRESS, ETH_ADDRESS } from "../../constants/addresses";
+import callFaucet from "./callFaucet";
 import { useState, useEffect } from "react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
@@ -10,6 +11,7 @@ import eth from "../../public/images/token-icons/eth.svg";
 import bitcoin from "../../public/images/token-icons/bitcoin.svg";
 import eusd from "../../public/images/token-icons/eusd.svg";
 import Image from "next/image";
+import { calculateOverrideValues } from "next/dist/server/font-utils";
 
 interface FaucetTableProps {
   loadingDrip: boolean;
@@ -97,7 +99,9 @@ const FaucetTable = ({ loadingDrip, drip, loadingBalances, userBalances, setSele
       return (
         <button
           onClick={() => {
-            console.log("Get XTZ from EOA");
+            console.log("Get XTZ from EOA via serverless function");
+            setSelectedToken(rowData.token);
+            callFaucet
           }}
           className="bg-darkGreen hover:bg-gray-700 hover:font-medium shadow-md ease-in-out duration-200 rounded-md px-6 py-2 flex items-center"
         >
