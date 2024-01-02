@@ -1,31 +1,63 @@
 import Image from "next/image"
-import { useWeb3Context } from "../../context/Web3Context";
+import { useWeb3Context } from "../context/Web3Context";
 
-const callFaucet = async () => {
+// const callFaucet = async () => {
+//   const context = useWeb3Context();
+//   if (!context) {
+//     console.error('Web3Context is null');
+//     return;
+//   }
+//   const { state: { address } } = context;
+//   const body = JSON.stringify({ walletAddress: address });
+//   // setIsLoading(true);
+//   const response = await fetch('/api/faucet', {
+//     method: 'POST',
+//     headers: {
+//       'Content-Type': 'application/json',
+//     },
+//     body: body,
+//   });
+
+//   if (response.ok) {
+//     const data = await response.json();
+//     console.log("txHash; " + data.body.receipt.transactionHash);
+//     // setTxHash(data.body.receipt.transactionHash);
+//     // setTokensClaimed(true);
+//   } else {
+//     console.error('Error:', response.status);
+//   }
+// }
+
+const useCallFaucet = () => {
   const context = useWeb3Context();
+
   if (!context) {
     console.error('Web3Context is null');
     return;
   }
   const { state: { address } } = context;
-  const body = JSON.stringify({ walletAddress: address });
-  // setIsLoading(true);
-  const response = await fetch('/api/faucet', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: body,
-  });
 
-  if (response.ok) {
-    const data = await response.json();
-    console.log("txHash; " + data.body.receipt.transactionHash);
-    // setTxHash(data.body.receipt.transactionHash);
-    // setTokensClaimed(true);
-  } else {
-    console.error('Error:', response.status);
+  const callFaucet = async () => {
+    const body = JSON.stringify({ walletAddress: address });
+    // setIsLoading(true);
+    const response = await fetch('/api/faucet', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: body,
+    });
+  
+    if (response.ok) {
+      const data = await response.json();
+      console.log("txHash; " + data.body.receipt.transactionHash);
+      // setTxHash(data.body.receipt.transactionHash);
+      // setTokensClaimed(true);
+    } else {
+      console.error('Error:', response.status);
+    }
   }
+  return callFaucet;
 }
 
 // const ClaimButton = ({ walletStatus, captchaCompleted }) => {
@@ -61,5 +93,5 @@ const callFaucet = async () => {
 //     )
 // }
 
-export default callFaucet;
+export default useCallFaucet;
 
