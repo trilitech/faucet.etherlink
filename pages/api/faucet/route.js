@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { ethers } from 'ethers';
 
-export async function POST(request) {
+export default async function POST(request) {
     try {
         const { walletAddress } = await request.json()
         const privateKey = process.env.PRIVATE_KEY;
