@@ -32,11 +32,12 @@ interface TokenData {
 const FaucetTable = ({ loadingDrip, drip, loadingBalances, userBalances, setSelectedToken }: FaucetTableProps) => {
   const [tokens, setTokens] = useState<TokenData[]>([]);
   const context = useWeb3Context();
-  if (!context) {
-    console.error('Web3Context is null');
-    return;
+  let address = "";
+
+  if (context && 'state' in context) {
+    const { state: { address: addr } } = context;
+    address = addr || "";
   }
-  const { state: { address } } = context;
 
   useEffect(() => {
     let mounted = true;
