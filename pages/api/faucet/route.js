@@ -16,7 +16,6 @@ export default async function POST(request) {
 
         const txResponse = await wallet.sendTransaction(transaction);
         const receipt = await txResponse.wait();
-        return new NextResponse(JSON.stringify({ receipt }), { status: 200 });
         return NextResponse.json(
             {
                 body: { receipt },
@@ -27,14 +26,13 @@ export default async function POST(request) {
         );
     } catch (error) {
         console.error(error);
-        // return NextResponse.json(
-        //     {
-        //         body: "error",
-        //     },
-        //     {
-        //         status: 500,
-        //     },
-        // );
-        return new NextResponse(JSON.stringify({ error: "An error occurred" }), { status: 500 });
+        return NextResponse.json(
+            {
+                body: "error",
+            },
+            {
+                status: 500,
+            },
+        );
     }
 };
