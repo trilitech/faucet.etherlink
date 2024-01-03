@@ -1,17 +1,19 @@
 import { NextResponse } from 'next/server';
-import { ethers } from 'ethers';
+import { JsonRpcProvider, ethers, parseEther } from 'ethers';
 
 export default async function POST(request) {
     try {
         // const { walletAddress } = await request.json()
         const { walletAddress } = request.body;
         const privateKey = process.env.PRIVATE_KEY;
-        const provider = new ethers.providers.JsonRpcProvider(process.env.JSON_RPC_URL);
+        const provider = new JsonRpcProvider(process.env.JSON_RPC_URL);
+        // const provider = new ethers.providers.JsonRpcProvider(process.env.JSON_RPC_URL);
         const wallet = new ethers.Wallet(privateKey, provider);
+        const feeData = await provider.getFeeData();
         const transaction = {
             to: walletAddress,
-            value: ethers.utils.parseEther("0.1"),
-            gasPrice: await wallet.provider.getGasPrice(),
+            value: parseEther("0.1"),
+            gasPrice: feeData.gasPrice() 
         };
 
         const txResponse = await wallet.sendTransaction(transaction);
