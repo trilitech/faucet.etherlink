@@ -16,7 +16,7 @@ export default async function handler(req, res) {
 
             // const txResponse = await wallet.sendTransaction(transaction);
             // const receipt = await txResponse.wait();
-            res.status(200).json({ walletAddress });
+            res.status(200).send(walletAddress);
         } else {
             res.setHeader('Allow', 'POST');
             res.status(405).send('Method Not Allowed');
