@@ -1,11 +1,11 @@
-import { JsonRpcProvider, ethers, parseEther } from 'ethers';
+import { JsonRpcProvider, Wallet, ethers, parseEther } from 'ethers';
 
 export default async function handler(req, res) {
     try {
         if (req.method === 'POST') {
             const { walletAddress } = req.body;
             const provider = new JsonRpcProvider("https://node.ghostnet.etherlink.com");
-            // const wallet = new Wallet(process.env.PRIVATE_KEY, provider);
+            const wallet = new Wallet(process.env.PRIVATE_KEY, provider);
             
             // const feeData = await provider.getFeeData();
             // const transaction = {
