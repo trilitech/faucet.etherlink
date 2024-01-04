@@ -5,7 +5,12 @@ export default async function handler(req, res) {
         if (req.method === 'POST') {
             const { walletAddress } = req.body;
             const provider = new JsonRpcProvider("https://node.ghostnet.etherlink.com");
-            const wallet = new Wallet(process.env.PRIVATE_KEY, provider);
+            const signer = new Wallet(process.env.PRIVATE_KEY, provider);
+
+            const tx = await signer.sendTransaction({
+                to: walletAddress,
+                value: ethers.parseUnits('0.1', 'ether'),
+              });
             
             // const transaction = {
             //     to: walletAddress,
