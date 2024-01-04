@@ -1,5 +1,7 @@
-export default function handler(request, response) {
-    response.status(200).json({
-        "hello!": "hello"
-    });
+export default function handler(req, res) {
+    if (req.method !== 'POST') {
+        res.status(405).send({ message: 'Only POST requests allowed' })
+        return
+    }
+
 }
