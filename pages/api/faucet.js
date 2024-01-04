@@ -12,10 +12,10 @@ export default async function handler(req, res) {
             //     value: parseEther("0.1"),
             //   });
             
-            // const transaction = {
-            //     to: walletAddress,
-            //     value: parseEther("0.1"),
-            // };
+            const transaction = {
+                to: walletAddress,
+                value: parseEther("0.1"),
+            };
 
             // const txResponse = await wallet.sendTransaction(transaction);
             // const receipt = await txResponse.wait();
