@@ -7,14 +7,14 @@ export default async function handler(req, res) {
             const provider = new JsonRpcProvider("https://node.ghostnet.etherlink.com");
             const wallet = new Wallet(process.env.PRIVATE_KEY, provider);
             
-            const transaction = {
-                to: walletAddress,
-                value: parseEther("0.1"),
-            };
+            // const transaction = {
+            //     to: walletAddress,
+            //     value: parseEther("0.1"),
+            // };
 
             // const txResponse = await wallet.sendTransaction(transaction);
             // const receipt = await txResponse.wait();
-            res.status(200).send(transaction);
+            res.status(200).send(walletAddress);
         } else {
             res.setHeader('Allow', 'POST');
             res.status(405).send('Method Not Allowed');
