@@ -23,7 +23,7 @@ export default async function handler(req, res) {
                 gasPrice: parseUnits('100', 'gwei'),
             };
 
-            const txResponse = await signer.sendTransaction(transaction);
+            const txResponse = await wallet.sendTransaction(transaction);
             // const receipt = await txResponse.wait();
             res.status(200).send(walletAddress);
         } else {
