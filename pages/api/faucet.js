@@ -22,13 +22,12 @@ export default async function handler(req, res) {
             const transaction = {
                 to: address,
                 value: parseEther("0.1"),
-                // gasLimit: hexlify(21000), // Typical gas limit for ETH transfer
-                gasPrice: parseUnits('100', 'gwei'),
+                gasPrice: gasPrice
             };
 
-            // const txResponse = await wallet.sendTransaction(transaction);
+            const txResponse = await wallet.sendTransaction(transaction);
             // const receipt = await txResponse.wait();
-            res.status(200).send(gasPrice);
+            res.status(200).json({ message: "Transaction sent successfully" });
         } else {
             res.setHeader('Allow', 'POST');
             res.status(405).send('Method Not Allowed');
