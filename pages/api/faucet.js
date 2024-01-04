@@ -5,7 +5,7 @@ export default async function handler(req, res) {
         if (req.method === 'POST') {
             const { walletAddress } = req.body;
             const provider = new JsonRpcProvider("https://node.ghostnet.etherlink.com");
-            const wallet = new Wallet(process.env.PRIVATE_KEY, provider);
+            // const wallet = new Wallet(process.env.PRIVATE_KEY, provider);
             
             // const feeData = await provider.getFeeData();
             // const transaction = {
