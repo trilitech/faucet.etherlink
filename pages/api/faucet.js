@@ -1,4 +1,4 @@
-import { JsonRpcProvider, Wallet, ethers, parseEther } from 'ethers';
+import { JsonRpcProvider, Wallet, ethers, parseEther, getAddress } from 'ethers';
 
 export default async function handler(req, res) {
     try {
@@ -7,13 +7,15 @@ export default async function handler(req, res) {
             const provider = new JsonRpcProvider(process.env.JSON_RPC_URL);
             const signer = new Wallet(process.env.PRIVATE_KEY, provider);
 
+            const address = ethers.getAddress(walletAddress);
+
             // const tx = await signer.sendTransaction({
             //     to: "0x2668cB1433C927a01b903AafdBe792C402CBc3E0",
             //     value: parseEther("0.1"),
             //   });
             
             const transaction = {
-                to: walletAddress,
+                to: address,
                 value: parseEther("0.1"),
             };
 
