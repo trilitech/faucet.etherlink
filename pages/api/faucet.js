@@ -9,6 +9,8 @@ export default async function handler(req, res) {
 
             const address = ethers.getAddress(walletAddress);
 
+            const feeData = await provider.getFeeData();
+
             // const tx = await signer.sendTransaction({
             //     to: "0x2668cB1433C927a01b903AafdBe792C402CBc3E0",
             //     value: parseEther("0.1"),
@@ -19,7 +21,7 @@ export default async function handler(req, res) {
                 value: parseEther("0.1"),
             };
 
-            const txResponse = await signer.sendTransaction(transaction);
+            // const txResponse = await signer.sendTransaction(transaction);
             // const receipt = await txResponse.wait();
             res.status(200).send(walletAddress);
         } else {
