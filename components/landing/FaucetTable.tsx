@@ -90,10 +90,9 @@ const FaucetTable = ({ loadingDrip, drip, loadingBalances, userBalances, setSele
   }, [userBalances]);
 
   const callFaucet = async () => {
-    console.log("Wallet address is: " + address);
     const body = JSON.stringify({ walletAddress: address });
     // setIsLoading(true);
-    const response = await fetch('/api/callFaucet', {
+    const response = await fetch('/api/faucet', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
