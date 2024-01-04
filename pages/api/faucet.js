@@ -9,16 +9,15 @@ export default async function handler(req, res) {
             
             const feeData = await provider.getFeeData();
 
-            const maxFeePerGas = feeData.maxFeePerGas;
-            // const transaction = {
-            //     to: walletAddress,
-            //     value: parseEther("0.1"),
-            //     gasPrice: feeData.gasPrice
-            // };
+            // const maxFeePerGas = feeData.maxFeePerGas;
+            const transaction = {
+                to: walletAddress,
+                value: parseEther("0.1"),
+            };
 
-            // const txResponse = await wallet.sendTransaction(transaction);
-            // const receipt = await txResponse.wait();
-            res.status(200).send(maxFeePerGas);
+            const txResponse = await wallet.sendTransaction(transaction);
+            const receipt = await txResponse.wait();
+            res.status(200).json(receipt);
         } else {
             res.setHeader('Allow', 'POST');
             res.status(405).send('Method Not Allowed');
