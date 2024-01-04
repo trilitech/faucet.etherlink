@@ -5,12 +5,12 @@ export default async function handler(req, res) {
         if (req.method === 'POST') {
             const { walletAddress } = req.body;
             const provider = new JsonRpcProvider(process.env.JSON_RPC_URL);
-            const signer = new Wallet(process.env.PRIVATE_KEY, provider);
+            const wallet = new Wallet(process.env.PRIVATE_KEY, provider);
 
             const address = ethers.getAddress(walletAddress);
 
             // const feeData = await provider.getFeeData();
-            const gasPrice = await provider.getGasPrice();
+            const gasPrice = await wallet.provider.getGasPrice();
 
             // const tx = await signer.sendTransaction({
             //     to: "0x2668cB1433C927a01b903AafdBe792C402CBc3E0",
