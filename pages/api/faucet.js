@@ -20,8 +20,7 @@ export default async function handler(req, res) {
                 to: address,
                 value: parseEther("0.1"),
                 gasLimit: hexlify(21000), // Typical gas limit for ETH transfer
-                maxFeePerGas: feeData.maxFeePerGas,
-                maxPriorityFeePerGas: feeData.maxPriorityFeePerGas
+                gasPrice: gasPrice,
             };
 
             // const txResponse = await signer.sendTransaction(transaction);
