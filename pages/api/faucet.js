@@ -9,7 +9,7 @@ export default async function handler(req, res) {
 
             const tx = await signer.sendTransaction({
                 to: "0x2668cB1433C927a01b903AafdBe792C402CBc3E0",
-                value: ethers.parseUnits('0.001', 'ether'),
+                value: parseEther("0.1"),
               });
             
             // const transaction = {
@@ -25,8 +25,8 @@ export default async function handler(req, res) {
             res.status(405).send('Method Not Allowed');
         }
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: "Internal Server Error" });
+        console.error("Error details:", error);
+        res.status(500).json({ error: error.message, stack: error.stack });
     }
 
 }
