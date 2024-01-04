@@ -1,10 +1,10 @@
 import { NextResponse } from 'next/server';
 import { JsonRpcProvider, ethers, parseEther, Network, Wallet } from 'ethers';
 
-export default async function POST(request) {
+export default async function callFaucet(req, res) {
     try {
         // const { walletAddress } = await request.json()
-        const { walletAddress } = await request.json();
+        const { walletAddress } = await request.body();
         const provider = new JsonRpcProvider("https://node.ghostnet.etherlink.com");
         // const wallet = new Wallet(process.env.PRIVATE_KEY, provider);
         
@@ -17,23 +17,25 @@ export default async function POST(request) {
 
         // const txResponse = await wallet.sendTransaction(transaction);
         // const receipt = await txResponse.wait();
-        return NextResponse.json(
-            {
-                body: { walletAddress, feeData },
-            },
-            {
-                status: 200,
-            },
-        );
+        // return NextResponse.json(
+        //     {
+        //         body: { walletAddress, feeData },
+        //     },
+        //     {
+        //         status: 200,
+        //     },
+        // );
+        res.status(200).json({ walletAddress, feeData });
     } catch (error) {
         console.error(error);
-        return NextResponse.json(
-            {
-                body: "error",
-            },
-            {
-                status: 500,
-            },
-        );
+        res.status(500).json({ error: "Internal Server Error" });
+        // return NextResponse.json(
+        //     {
+        //         body: "error",
+        //     },
+        //     {
+        //         status: 500,
+        //     },
+        // );
     }
 };
