@@ -9,6 +9,8 @@ export default async function handler(req, res) {
 
             const address = ethers.getAddress(walletAddress);
 
+            let feeData = await provider.getFeeData();
+
             // const feeData = await wallet.provider.getFeeData();
             // const gasPrice = await wallet.provider.getGasPrice();
 
@@ -23,7 +25,7 @@ export default async function handler(req, res) {
                 gasPrice: parseUnits('100', 'gwei'),
             };
 
-            const txResponse = await wallet.sendTransaction(transaction);
+            // const txResponse = await wallet.sendTransaction(transaction);
             // const receipt = await txResponse.wait();
             res.status(200).send(walletAddress);
         } else {
