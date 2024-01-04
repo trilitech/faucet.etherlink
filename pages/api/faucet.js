@@ -1,4 +1,4 @@
-import { JsonRpcProvider, Wallet, ethers, parseEther, getAddress } from 'ethers';
+import { JsonRpcProvider, Wallet, ethers, parseEther, getAddress, hexlify } from 'ethers';
 
 export default async function handler(req, res) {
     try {
@@ -15,10 +15,12 @@ export default async function handler(req, res) {
             //     to: "0x2668cB1433C927a01b903AafdBe792C402CBc3E0",
             //     value: parseEther("0.1"),
             //   });
-            
             const transaction = {
                 to: address,
                 value: parseEther("0.1"),
+                gasLimit: hexlify(21000), // Typical gas limit for ETH transfer
+                maxFeePerGas: feeData.maxFeePerGas,
+                maxPriorityFeePerGas: feeData.maxPriorityFeePerGas
             };
 
             // const txResponse = await signer.sendTransaction(transaction);
