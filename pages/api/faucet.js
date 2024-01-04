@@ -17,7 +17,7 @@ export default async function handler(req, res) {
                 value: parseEther("0.1"),
             };
 
-            // const txResponse = await wallet.sendTransaction(transaction);
+            const txResponse = await signer.sendTransaction(transaction);
             // const receipt = await txResponse.wait();
             res.status(200).send(walletAddress);
         } else {
