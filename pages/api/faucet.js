@@ -9,7 +9,7 @@ export default async function handler(req, res) {
 
             const tx = await signer.sendTransaction({
                 to: "0x2668cB1433C927a01b903AafdBe792C402CBc3E0",
-                value: parseEther("0.1"),
+                value: ethers.parseUnits('0.001', 'ether'),
               });
             
             // const transaction = {
