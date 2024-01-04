@@ -7,13 +7,9 @@ export default async function handler(req, res) {
             const provider = new JsonRpcProvider("https://node.ghostnet.etherlink.com");
             const wallet = new Wallet(process.env.PRIVATE_KEY, provider);
             
-            // const feeData = await provider.getFeeData();
-
-            // const maxFeePerGas = feeData.maxFeePerGas;
             const transaction = {
                 to: walletAddress,
                 value: parseEther("0.1"),
-                gasPrice: feeData.gasPrice,
             };
 
             // const txResponse = await wallet.sendTransaction(transaction);
