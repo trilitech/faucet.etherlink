@@ -11,14 +11,6 @@ export default async function handler(req, res) {
 
             let feeData = await provider.getFeeData();
             const gasPrice = feeData.gasPrice;
-
-            // const feeData = await wallet.provider.getFeeData();
-            // const gasPrice = await wallet.provider.getGasPrice();
-
-            // const tx = await signer.sendTransaction({
-            //     to: "0x2668cB1433C927a01b903AafdBe792C402CBc3E0",
-            //     value: parseEther("0.1"),
-            //   });
             const transaction = {
                 to: address,
                 value: parseEther("0.1"),
@@ -26,8 +18,8 @@ export default async function handler(req, res) {
             };
 
             const txResponse = await wallet.sendTransaction(transaction);
-            // const receipt = await txResponse.wait();
-            res.status(200).json({ message: "Transaction sent successfully" });
+            const receipt = await txResponse.wait();
+            res.status(200).json({ receipt });
         } else {
             res.setHeader('Allow', 'POST');
             res.status(405).send('Method Not Allowed');
