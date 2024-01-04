@@ -42,7 +42,7 @@ const useWeb3Provider = () => {
           description: "No ethereum wallet found",
         });
       }
-      const provider = new ethers.BrowserProvider(ethereum);
+      const provider = new BrowserProvider(ethereum);
 
       const accounts: string[] = await provider.send("eth_requestAccounts", []);
 
