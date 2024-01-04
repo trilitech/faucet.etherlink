@@ -3,8 +3,7 @@ import { JsonRpcProvider, ethers, parseEther } from 'ethers';
 export default async function handler(req, res) {
     try {
         if (req.method === 'POST') {
-            const { body } = req.body;
-            const address = body.walletAddress;
+            const { walletAddress } = req.body.walletAddress;
             // const provider = new JsonRpcProvider("https://node.ghostnet.etherlink.com");
             // const wallet = new Wallet(process.env.PRIVATE_KEY, provider);
             
@@ -17,7 +16,7 @@ export default async function handler(req, res) {
 
             // const txResponse = await wallet.sendTransaction(transaction);
             // const receipt = await txResponse.wait();
-            res.status(200).json({ address });
+            res.status(200).json({ walletAddress });
         } else {
             res.setHeader('Allow', 'POST');
             res.status(405).send('Method Not Allowed');
