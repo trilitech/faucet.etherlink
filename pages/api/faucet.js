@@ -9,7 +9,8 @@ export default async function handler(req, res) {
 
             const address = ethers.getAddress(walletAddress);
 
-            const feeData = await provider.getFeeData();
+            // const feeData = await provider.getFeeData();
+            const gasPrice = await provider.getGasPrice();
 
             // const tx = await signer.sendTransaction({
             //     to: "0x2668cB1433C927a01b903AafdBe792C402CBc3E0",
