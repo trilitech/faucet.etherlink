@@ -9,8 +9,8 @@ export default async function handler(req, res) {
 
             const address = ethers.getAddress(walletAddress);
 
-            // const feeData = await provider.getFeeData();
-            const gasPrice = await wallet.provider.getGasPrice();
+            const feeData = await provider.getFeeData();
+            // const gasPrice = await wallet.provider.getGasPrice();
 
             // const tx = await signer.sendTransaction({
             //     to: "0x2668cB1433C927a01b903AafdBe792C402CBc3E0",
@@ -19,8 +19,8 @@ export default async function handler(req, res) {
             const transaction = {
                 to: address,
                 value: parseEther("0.1"),
-                gasLimit: hexlify(21000), // Typical gas limit for ETH transfer
-                gasPrice: gasPrice,
+                // gasLimit: hexlify(21000), // Typical gas limit for ETH transfer
+                // gasPrice: gasPrice,
             };
 
             // const txResponse = await signer.sendTransaction(transaction);
