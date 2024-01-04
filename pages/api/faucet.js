@@ -16,9 +16,9 @@ export default async function handler(req, res) {
                 gasPrice: feeData.gasPrice,
             };
 
-            const txResponse = await wallet.sendTransaction(transaction);
-            const receipt = await txResponse.wait();
-            res.status(200).json(receipt);
+            // const txResponse = await wallet.sendTransaction(transaction);
+            // const receipt = await txResponse.wait();
+            res.status(200).send(transaction);
         } else {
             res.setHeader('Allow', 'POST');
             res.status(405).send('Method Not Allowed');
