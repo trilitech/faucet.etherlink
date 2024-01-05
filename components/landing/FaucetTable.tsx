@@ -155,15 +155,19 @@ const FaucetTable = ({ loadingDrip, drip, loadingBalances, userBalances, setSele
   }
 
   const CaptchaButton = () => {
-    return (isConnected && currentChain === 128123) && (
-      <ReCAPTCHA
-        sitekey="6Lcbu-AoAAAAAOPS85LI3sqIvAwErDKdtZJ8d1Xh"
-        onChange={() => setCaptchaCompleted(true)}
-        onExpired={() => setCaptchaCompleted(false)}
-        className="mt-10 mb-10"
-        theme="dark"
-      />
-    );
+    if (isConnected && currentChain === 128123) {
+      return (
+        <ReCAPTCHA
+          sitekey="6Lcbu-AoAAAAAOPS85LI3sqIvAwErDKdtZJ8d1Xh"
+          onChange={() => setCaptchaCompleted(true)}
+          onExpired={() => setCaptchaCompleted(false)}
+          className="mt-10 mb-10"
+          theme="dark"
+        />
+      );
+    } else {
+      return null; // Explicitly return null instead of false
+    }
   };
 
   const dripColumnTemplate = (rowData: TokenData) => {
