@@ -12,6 +12,7 @@ import eusd from "../../public/images/token-icons/eusd.svg";
 import Image from "next/image";
 import { useWeb3Context } from "../../context/Web3Context";
 import { calculateOverrideValues } from "next/dist/server/font-utils";
+import ReCAPTCHA from "react-google-recaptcha";
 
 interface FaucetTableProps {
   loadingDrip: boolean;
@@ -29,13 +30,24 @@ interface TokenData {
 }
 
 const FaucetTable = ({ loadingDrip, drip, loadingBalances, userBalances, setSelectedToken }: FaucetTableProps) => {
+
+  // collecting state
   const [tokens, setTokens] = useState<TokenData[]>([]);
   const context = useWeb3Context();
   let address = "";
+  let isConnected = false;
+  let currentChain = 0;
+
+  // internal state
+  const [captchaCompleted, setCaptchaCompleted] = useState(false)
+  const [isLoading, setIsLoading] = useState(false);
+  const [txHash, setTxHash] = useState("")
 
   if (context && 'state' in context) {
     const { state: { address: addr } } = context;
     address = addr || "";
+    isConnected = context.state.isAuthenticated;
+    currentChain = context.state.currentChain || 0;
   }
 
   useEffect(() => {
@@ -86,12 +98,12 @@ const FaucetTable = ({ loadingDrip, drip, loadingBalances, userBalances, setSele
       }
     }
 
-    return () => {mounted = false};
+    return () => { mounted = false };
   }, [userBalances]);
 
   const callFaucet = async () => {
     const body = JSON.stringify({ walletAddress: address });
-    // setIsLoading(true);
+    setIsLoading(true);
     const response = await fetch('/api/faucet', {
       method: 'POST',
       headers: {
@@ -99,14 +111,65 @@ const FaucetTable = ({ loadingDrip, drip, loadingBalances, userBalances, setSele
       },
       body: body,
     });
-  
+
     if (response.ok) {
       const data = await response.json();
+      setTxHash(data.body.receipt.transactionHash);
       console.log("txHash; " + data.body.receipt.transactionHash);
-      // setTxHash(data.body.receipt.transactionHash);
-      // setTokensClaimed(true);
     } else {
       console.error('Error:', response.status);
+    }
+  };
+
+  const CallFaucetButton = () => {
+    if (isConnected && currentChain === 128123) {
+      return (
+        <button
+          onClick={txHash ? () => window.open(`https://explorer.etherlink.com/tx/${txHash}`, '_blank') : callFaucet}
+          disabled={isLoading || !captchaCompleted}
+          className={`flex flex-row items-center justify-center py-3 text-lg font-medium text-center text-black bg-white border-solid border-2 border-black rounded-md px-7 lg:px-6 lg:py-4 hover:bg-darkGreen hover:border-black hover:text-white ${isLoading || !captchaCompleted ? 'opacity-50 cursor-not-allowed' : ''}`}
+        >
+          {isLoading ? <>
+            <Image
+              src="/img/home/logo.png"
+              alt="Loading..."
+              width={32}
+              height={32}
+              className={`w-8 mr-2 ${isLoading ? 'spin-logo' : ''}`}
+            />
+            Loading...
+          </> : txHash ?
+            <>
+              <Image
+                src="/img/home/logo.png"
+                alt="logo"
+                width={32}
+                height={32}
+                className="w-8 mr-2"
+              />
+              {`${txHash.slice(0, 6)}...${txHash.slice(-4)}`}
+            </> :
+            `Start with XTZ`}
+        </button>
+      );
+    } else {
+      return null;
+    }
+  }
+
+  const CaptchaButton = () => {
+    if (isConnected && currentChain === 128123) {
+      return (
+        <ReCAPTCHA
+          sitekey="6Lcbu-AoAAAAAOPS85LI3sqIvAwErDKdtZJ8d1Xh"
+          onChange={() => setCaptchaCompleted(true)}
+          onExpired={() => setCaptchaCompleted(false)}
+          className="mt-10 mb-10"
+          theme="dark"
+        />
+      );
+    } else {
+      return null; // Explicitly return null instead of false
     }
   };
 
@@ -125,16 +188,19 @@ const FaucetTable = ({ loadingDrip, drip, loadingBalances, userBalances, setSele
       );
     } else {
       return (
-        <button
-          onClick={() => {
-            console.log("Get XTZ from EOA via serverless function");
-            callFaucet();
-            setSelectedToken(rowData.token);
-          }}
-          className="bg-darkGreen hover:bg-gray-700 hover:font-medium shadow-md ease-in-out duration-200 rounded-md px-6 py-2 flex items-center"
-        >
-          Start with XTZ
-        </button>
+        // <button
+        //   onClick={() => {
+        //     callFaucet();
+        //     setSelectedToken(rowData.token);
+        //   }}
+        //   className="bg-darkGreen hover:bg-gray-700 hover:font-medium shadow-md ease-in-out duration-200 rounded-md px-6 py-2 flex items-center"
+        // >
+        //   Start with XTZ
+        // </button>
+        <>
+          <CaptchaButton />
+          <CallFaucetButton />
+        </>
       );
     }
   };
