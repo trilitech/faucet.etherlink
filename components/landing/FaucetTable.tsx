@@ -122,8 +122,8 @@ const FaucetTable = ({ loadingDrip, drip, loadingBalances, userBalances, setSele
   };
 
   const CallFaucetButton = () => {
-    return (
-      isConnected && currentChain === 128123 ?
+    if (isConnected && currentChain === 128123) {
+      return (
         <button
           onClick={txHash ? () => window.open(`https://explorer.etherlink.com/tx/${txHash}`, '_blank') : callFaucet}
           disabled={isLoading || !captchaCompleted}
@@ -150,8 +150,11 @@ const FaucetTable = ({ loadingDrip, drip, loadingBalances, userBalances, setSele
               {`${txHash.slice(0, 6)}...${txHash.slice(-4)}`}
             </> :
             `Start with XTZ`}
-        </button> : ""
-    )
+        </button>
+      );
+    } else {
+      return null;
+    }
   }
 
   const CaptchaButton = () => {
